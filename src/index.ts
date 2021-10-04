@@ -9,6 +9,8 @@ import { DeepLApi } from './deepl';
 import * as runner from './runnner';
 import * as reacjilator from './reacjilator';
 
+const LanguageDetect = require('languagedetect');
+const lngDetector = new LanguageDetect();
 
 const logLevel = process.env.SLACK_LOG_LEVEL as LogLevel || LogLevel.INFO;
 const logger = new ConsoleLogger();
@@ -106,6 +108,9 @@ app.message('', async ({ body, client }) => {
   if (replies.messages && replies.messages.length > 0) {
     const message = replies.messages[0];
     if (message.text) {
+
+       const lang = lngDetector.getLanguages(message.text) 
+       console.log(lang)
       let translatedText = await deepL.translate(message.text, 'ja');
 
       if (translatedText == null) {
