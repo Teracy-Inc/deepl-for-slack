@@ -111,6 +111,9 @@ app.message('', async ({ body, client }) => {
     const message = replies.messages[0];
     if (message.text) {
       const translatedText = await deepL.translate(message.text, 'en');
+    console.log("translatedText")
+    console.log(translatedText)
+
       if (translatedText == null) {
         return;
       }
