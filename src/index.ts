@@ -109,7 +109,7 @@ app.message('', async ({ body, client }) => {
     const message = replies.messages[0];
     if (message.text) {
 
-      let translatedText = await deepL.translate(message.text, 'en');
+      let translatedText = await deepL.translate(message.text, 'ja');
 
       if (translatedText == null) {
         return
