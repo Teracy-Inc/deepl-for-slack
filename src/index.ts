@@ -103,20 +103,18 @@ app.message('', async ({ body, client }) => {
     const channelId = event['channel'];
     const messageTs = event['ts'];
     const replies = await reacjilator.repliesInThread(client, channelId, messageTs);
-    console.log("message")
-    console.log(channelId)
-    console.log(messageTs)
-    console.log(replies)
   if (replies.messages && replies.messages.length > 0) {
     const message = replies.messages[0];
     if (message.text) {
-      const translatedText = await deepL.translate(message.text, 'en');
-    console.log("translatedText")
-    console.log(translatedText)
+      let translatedText = await deepL.translate(message.text, 'ja');
 
       if (translatedText == null) {
-        return;
+        translatedText = await deepL.translate(message.text, 'en');
       }
+      if (translatedText == null) {
+        return
+      }
+
       if (reacjilator.isAlreadyPosted(replies, translatedText)) {
         return;
       }
