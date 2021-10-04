@@ -100,6 +100,10 @@ app.event("reaction_added", async ({ body, client }) => {
 });
 
 app.message('knock knock', async ({ message, say }) => {
+    console.log("knock")
+    console.log(message)
+    console.log(say)
+
     await say(`_Who's there?_`);
 });
 
