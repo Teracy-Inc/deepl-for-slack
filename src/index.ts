@@ -67,6 +67,8 @@ app.view("new-runner", async ({ body, ack }) => {
 import { ReactionAddedEvent } from './types/reaction-added';
 
 app.event("reaction_added", async ({ body, client }) => {
+    console.log("reaction_added")
+
   const event = body.event as ReactionAddedEvent;
   if (event.item['type'] !== 'message') {
     return;
