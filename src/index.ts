@@ -97,6 +97,41 @@ app.event("reaction_added", async ({ body, client }) => {
   }
 });
 
+app.message('', async ({ message, say }) => {
+    console.log("message")
+    console.log(message)
+    console.log(say)
+    return
+    // const event = body.event as ReactionAddedEvent;
+    // if (event.item['type'] !== 'message') {
+    //   return;
+    // }
+    // const channelId = event.item['channel'];
+    // const messageTs = event.item['ts'];
+    // if (!channelId || !messageTs) {
+    //   return;
+    // }
+    // const lang = reacjilator.lang(event);
+    // if (!lang) {
+    //   return;
+    // }
+  
+    // const replies = await reacjilator.repliesInThread(client, channelId, messageTs);
+    // if (replies.messages && replies.messages.length > 0) {
+    //   const message = replies.messages[0];
+    //   if (message.text) {
+    //     const translatedText = await deepL.translate(message.text, lang);
+    //     if (translatedText == null) {
+    //       return;
+    //     }
+    //     if (reacjilator.isAlreadyPosted(replies, translatedText)) {
+    //       return;
+    //     }
+    //     await reacjilator.sayInThread(client, channelId, translatedText, message);
+    //   }
+    // }
+  });
+
 // -----------------------------
 // starting the app
 // -----------------------------
