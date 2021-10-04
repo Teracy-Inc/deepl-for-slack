@@ -67,7 +67,6 @@ app.view("new-runner", async ({ body, ack }) => {
 import { ReactionAddedEvent } from './types/reaction-added';
 
 app.event("reaction_added", async ({ body, client }) => {
-    console.log("reaction_added")
 
   const event = body.event as ReactionAddedEvent;
   if (event.item['type'] !== 'message') {
@@ -99,12 +98,24 @@ app.event("reaction_added", async ({ body, client }) => {
   }
 });
 
-app.message('knock knock', async ({ message, say }) => {
-    console.log("knock")
-    console.log(message)
-    console.log(say)
-
-    await say(`_Who's there?_`);
+app.message('knock knock', async ({ body, client }) => {
+    const event = body.event
+    const channelId = event.item['channel'];
+    const messageTs = event.item['ts'];
+    const replies = await reacjilator.repliesInThread(client, channelId, messageTs);
+  if (replies.messages && replies.messages.length > 0) {
+    const message = replies.messages[0];
+    if (message.text) {
+      const translatedText = await deepL.translate(message.text, 'en');
+      if (translatedText == null) {
+        return;
+      }
+      if (reacjilator.isAlreadyPosted(replies, translatedText)) {
+        return;
+      }
+      await reacjilator.sayInThread(client, channelId, translatedText, message);
+    }
+  }
 });
 
 app.message('test', async ({ message, say }) => {
