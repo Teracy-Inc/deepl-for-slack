@@ -9,9 +9,6 @@ import { DeepLApi } from './deepl';
 import * as runner from './runnner';
 import * as reacjilator from './reacjilator';
 
-const LanguageDetect = require('languagedetect');
-const lngDetector = new LanguageDetect();
-
 const logLevel = process.env.SLACK_LOG_LEVEL as LogLevel || LogLevel.INFO;
 const logger = new ConsoleLogger();
 logger.setLevel(logLevel);
