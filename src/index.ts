@@ -109,7 +109,7 @@ app.message('', async ({ body, client }) => {
     const message = replies.messages[0];
     if (message.text) {
 
-       const lang = lngDetector.getLanguages(message.text) 
+       const lang = lngDetector.detect(message.text, 1) 
        console.log(lang)
       let translatedText = await deepL.translate(message.text, 'ja');
 
