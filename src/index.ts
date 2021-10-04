@@ -99,7 +99,7 @@ app.event("reaction_added", async ({ body, client }) => {
 });
 
 app.message('knock knock', async ({ body, client }) => {
-    const event = body.event
+    const event = body.event as ReactionAddedEvent
     const channelId = event.item['channel'];
     const messageTs = event.item['ts'];
     const replies = await reacjilator.repliesInThread(client, channelId, messageTs);
