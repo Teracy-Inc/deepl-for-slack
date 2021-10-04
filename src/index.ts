@@ -97,7 +97,7 @@ app.event("reaction_added", async ({ body, client }) => {
   }
 });
 
-app.message('', async ({ message, say }) => {
+app.message('test', async ({ message, say }) => {
     console.log("message")
     console.log(message)
     console.log(say)
