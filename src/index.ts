@@ -1,7 +1,7 @@
 import { loadEnv } from './dotenv';
 loadEnv();
 
-import { App } from '@slack/bolt';
+import { App, MessageEvent } from '@slack/bolt';
 import { ConsoleLogger, LogLevel } from '@slack/logger';
 import * as middleware from './custom-middleware';
 
@@ -99,9 +99,9 @@ app.event("reaction_added", async ({ body, client }) => {
 });
 
 app.message('knock knock', async ({ body, client }) => {
-    const event = body.event as ReactionAddedEvent
-    const channelId = event.item['channel'];
-    const messageTs = event.item['ts'];
+    const event = body.event as MessageEvent
+    const channelId = event['channel'];
+    const messageTs = event['ts'];
     const replies = await reacjilator.repliesInThread(client, channelId, messageTs);
   if (replies.messages && replies.messages.length > 0) {
     const message = replies.messages[0];
