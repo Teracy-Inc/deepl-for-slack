@@ -105,9 +105,10 @@ app.message('', async ({ body, client }) => {
   if (replies.messages && replies.messages.length > 0) {
     const message = replies.messages[0];
     if (message.text) {
+        let formattedText = message.text.replace(/<(.*?)>/g, '')
         console.log("message.text")
-        console.log(message.text)
-      let translatedText = await deepL.translate(message.text, 'ja');
+        console.log(formattedText)
+      let translatedText = await deepL.translate(formattedText, 'ja');
 
       if (translatedText == null) {
         return
