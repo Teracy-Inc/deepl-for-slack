@@ -3,7 +3,7 @@ loadEnv();
 
 import { App, MessageEvent } from '@slack/bolt';
 import { ConsoleLogger, LogLevel } from '@slack/logger';
-const guessLanguage = require('../lib/guessLanguage');
+var lngDetector = new (require('languagedetect'));
 
 import * as middleware from './custom-middleware';
 
@@ -109,18 +109,15 @@ app.message('', async ({ body, client }) => {
     if (message.text) {
         let formattedText = message.text.replace(/<(.*?)>/g, '')
         let lang = 'ja'
-        console.log("guessLanguage")
-        console.log(guessLanguage)
-
-        guessLanguage.detect('...input text here...', function(language:string) {
-            console.log('Detected language code of provided text is [' + language + ']');
-            lang = ['ja', 'zh'].includes(language) ? 'ja' : 'en'
-            console.log(lang);
-        });
-        console.log("message.text")
-        console.log(formattedText)
-        console.log(lang);
-
+        let proposedLangs = lngDetector.detect(formattedText, 3).map( val => val[0])
+        console.log("proposedLangs")
+        console.log(proposedLangs)
+        let isEnglish = proposedLangs.some(val =>{
+            ['english', 'hawaiian', 'italian', 'pidgin', 'danish'].includes(val)
+        })
+        console.log("isEnglish")
+        console.log(isEnglish)
+        lang = isEnglish ? 'en' : 'ja'
       let translatedText = await deepL.translate(formattedText, lang);
 
       if (translatedText == null) {
