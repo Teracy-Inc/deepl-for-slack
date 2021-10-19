@@ -112,12 +112,15 @@ app.message('', async ({ body, client }) => {
         let proposedLangs = lngDetector.detect(formattedText, 3).map( (val:any[][]) => val[0])
         console.log("proposedLangs")
         console.log(proposedLangs)
-        let isEnglish = proposedLangs.some((val: string) =>{
-            ['english', 'hawaiian', 'italian', 'pidgin', 'danish'].includes(val)
-        })
-        console.log("isEnglish")
-        console.log(isEnglish)
-        lang = isEnglish ? 'en' : 'ja'
+        if(!proposedLangs.length) {
+            let isEnglish = proposedLangs.some((val: string) =>{
+                ['english', 'hawaiian', 'italian', 'pidgin', 'danish'].includes(val)
+            })
+            console.log("isEnglish")
+            console.log(isEnglish)
+            lang = isEnglish ? 'en' : 'ja'
+        }
+
       let translatedText = await deepL.translate(formattedText, lang);
 
       if (translatedText == null) {
