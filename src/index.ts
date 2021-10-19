@@ -3,7 +3,7 @@ loadEnv();
 
 import { App, MessageEvent } from '@slack/bolt';
 import { ConsoleLogger, LogLevel } from '@slack/logger';
-var guessLanguage = require('./lib/guessLanguage');
+const guessLanguage = require('guesslanguage');
 
 import * as middleware from './custom-middleware';
 
