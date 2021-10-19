@@ -3,7 +3,6 @@ loadEnv();
 
 import { App, MessageEvent } from '@slack/bolt';
 import { ConsoleLogger, LogLevel } from '@slack/logger';
-const guessLanguage = require('guesslanguage');
 
 import * as middleware from './custom-middleware';
 
@@ -109,6 +108,7 @@ app.message('', async ({ body, client }) => {
     if (message.text) {
         let formattedText = message.text.replace(/<(.*?)>/g, '')
         let lang = 'ja'
+        const guessLanguage = require('guesslanguage');
 
         guessLanguage.detect('...input text here...', function(language:string) {
             console.log('Detected language code of provided text is [' + language + ']');
