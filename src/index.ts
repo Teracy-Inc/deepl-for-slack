@@ -3,6 +3,8 @@ loadEnv();
 
 import { App, MessageEvent } from '@slack/bolt';
 import { ConsoleLogger, LogLevel } from '@slack/logger';
+var guessLanguage = require('./lib/guessLanguage');
+
 import * as middleware from './custom-middleware';
 
 import { DeepLApi } from './deepl';
@@ -106,9 +108,18 @@ app.message('', async ({ body, client }) => {
     const message = replies.messages[0];
     if (message.text) {
         let formattedText = message.text.replace(/<(.*?)>/g, '')
+        let lang = 'ja'
+
+        guessLanguage.detect('...input text here...', function(language:string) {
+            console.log('Detected language code of provided text is [' + language + ']');
+            lang = ['ja', 'zh'].includes(language) ? 'ja' : 'en'
+            console.log(lang);
+        });
         console.log("message.text")
         console.log(formattedText)
-      let translatedText = await deepL.translate(formattedText, 'ja');
+        console.log(lang);
+
+      let translatedText = await deepL.translate(formattedText, lang);
 
       if (translatedText == null) {
         return
