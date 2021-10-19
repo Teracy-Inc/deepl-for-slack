@@ -108,7 +108,7 @@ app.message('', async ({ body, client }) => {
     const message = replies.messages[0];
     if (message.text) {
         let formattedText = message.text.replace(/<(.*?)>/g, '')
-        let lang = 'ja'
+        let lang = 'en'
         let proposedLangs = lngDetector.detect(formattedText, 3).map( (val:any[][]) => val[0])
         console.log("proposedLangs")
         console.log(proposedLangs)
