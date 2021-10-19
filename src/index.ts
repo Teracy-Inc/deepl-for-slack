@@ -108,7 +108,7 @@ app.message('', async ({ body, client }) => {
     if (message.text) {
         let formattedText = message.text.replace(/<(.*?)>/g, '')
         let lang = 'ja'
-        const guessLanguage = require('guesslanguage');
+        var guessLanguage = require('./lib/guessLanguage');
 
         guessLanguage.detect('...input text here...', function(language:string) {
             console.log('Detected language code of provided text is [' + language + ']');
